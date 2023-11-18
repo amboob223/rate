@@ -1,0 +1,89 @@
+this app I guess will be the date thing the key on here is to again do the request but also get data
+with photos and make tables although there are no tables we got to get creative or use the react-native -table -component
+
+// the form will get name photo relationship status info and geoloctION 
+
+    //COMPONENTS
+
+            // SO WE need a form component that takes the initial form that keeps the daters info 
+            // a home component that describes the point of the iste
+                - the site is to make a review for a date and a user name so thst people can see if they can remember the date 
+                - we need a review component maybe that will take a prop of the data from the usser
+                
+
+
+Creating design documents for a dating app involves outlining the structure, functionality, and user interface of the application. Below are design documents in a simplified format, including user stories, component details, and considerations for the form, home, and review components. Note that this is just a starting point, and you may need to adapt it based on the specific features and requirements of your app.
+
+User Stories:
+As a user, I want to provide information about my date experience, including name, photo, relationship status, additional info, and geolocation.
+As a user, I want to view the home page to understand the purpose of the app.
+As a user, I want to leave a review about a date, including the date's information and my thoughts.
+As a user, I want to see reviews left by others to gather insights about potential dates.
+Components:
+Form Component:
+Props:
+onSubmit: Function to handle form submission.
+Fields:
+Name
+Photo (upload or select from gallery)
+Relationship status
+Additional information
+Geolocation
+Actions:
+Submit button triggers onSubmit with form data.
+Home Component:
+Content:
+Introduction to the app's purpose.
+Brief instructions on leaving and viewing reviews.
+Prompts users to use the Form Component.
+Review Component:
+Props:
+reviewData: Object containing information about the date.
+Content:
+Display the date's name, photo, relationship status, additional info, and geolocation.
+Allow users to leave a review.
+Display existing reviews (if any).
+Design Considerations:
+Navigation:
+
+Consider using a navigation library like react-navigation to navigate between different components.
+Styling:
+
+Use a consistent color scheme and styling across components for a cohesive look.
+Forms:
+
+Implement form validation to ensure the completeness and accuracy of user input.
+Photos:
+
+Explore options for handling user photos, including image upload or selection from the gallery.
+Data Management:
+
+Decide on the data storage mechanism for user information and reviews. This may involve using a backend server or local storage.
+Geolocation:
+
+If geolocation is a crucial feature, ensure that it is handled appropriately, considering user privacy and permissions.
+Review Interaction:
+
+Consider adding features like star ratings or comment sections for users to provide detailed feedback.
+Responsiveness:
+
+Design components to be responsive to different screen sizes, ensuring a positive user experience on various devices.
+Testing:
+
+Plan for testing different scenarios, including form submissions, data retrieval, and component interactions.
+User Experience:
+
+Prioritize a user-friendly interface, minimizing friction for users when navigating and interacting with the app.
+Remember that this is a broad outline, and you may need to dive deeper into each component based on your app's complexity and specific features. Additionally, integrating a backend service will be necessary for storing and retrieving user data.
+
+
+
+
+
+Message ChatGPT…
+
+ChatGPT can make mistakes. Consider checking important information.
+
+the issue is you cant have a bunch of folders it worked when i took it out the folder
+
+the style object goes outside the componenet
