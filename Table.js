@@ -23,21 +23,21 @@ const handlelove = async () => {
 
     // Check if the response body is empty
     const text = await response.text();
-    console.log("Raw Response:", text);
+    // console.log("Raw Response:", text);
 
     // Parse the JSON response
     const parsedResponse = JSON.parse(text);
 
     // Ensure parsedResponse.rows is an array
-    if (!parsedResponse.rows || !Array.isArray(parsedResponse.rows)) {
-      console.log("Invalid response format - 'rows' property not found or not an array");
-      return;
-    }
+    // if (!parsedResponse.rows || !Array.isArray(parsedResponse.rows)) {
+    //   console.log("Invalid response format - 'rows' property not found or not an array");
+    //   return;
+    // }
 
     // Update the state with the new data
     setTableData(parsedResponse.rows);
 
-    console.log(parsedResponse.rows);
+ 
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -56,18 +56,18 @@ const handlelove = async () => {
       </View>
 
       {/* Table data */}
-      {tableData.map((item) => (
-        <View key={item.id} style={styles.row}>
+      {tableData.map((item, index) => (
+        <View key={index} style={styles.row}>
           <Text style={styles.cell}>{item.name}</Text>
           <Text style={styles.cell}>{item.age}</Text>
           <Text style={styles.cell}>{item.status}</Text>
-          <Text style={styles.cell}>{item.interest}</Text>
+          <Text style={styles.cell}>{item.intrest}</Text>
         </View>
       ))}
 
       <StatusBar style="auto" />
       <Button title="get love" onPress={handlelove}></Button>
-    </View>
+     </View>
   );
 };
 
@@ -106,36 +106,3 @@ const styles = StyleSheet.create({
 
 
 export default Table;
-
-
-// const styles = StyleSheet.create({
-//   container: {
-//     marginTop: 20,
-//     marginHorizontal: 10,
-//   },
-//   header: {
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//     borderBottomWidth: 1,
-//     borderBottomColor: "#ccc",
-//     paddingBottom: 10,
-//   },
-//   headerText: {
-//     flex: 1,
-//     textAlign: "center",
-//     fontWeight: "bold",
-//   },
-//   row: {
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//     borderBottomWidth: 1,
-//     borderBottomColor: "#ccc",
-//     paddingVertical: 10,
-//   },
-//   cell: {
-//     flex: 1,
-//     textAlign: "center",
-//   },
-// });
-
-// export default Table;

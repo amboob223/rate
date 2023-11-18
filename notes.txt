@@ -91,9 +91,6 @@ the style object goes outside the componenet
 //okay now the issue was chatgpt was doing to much and the parsi was messing it up 
 
 
-        //today we are going to make the get request
-        
-         in the sht render it on the table 
          
          and submit and retrieve picture data 
 
