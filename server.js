@@ -18,7 +18,8 @@ app.post("/rate", async (req, res) => {
         "INSERT INTO date (name, age, status, intrest) VALUES($1, $2, $3, $4) RETURNING *",
         [name, age, status, intrest]
       );
-console.log(result.rows[0]);   res.json(result.rows[0])
+console.log(result.rows[0]);   
+res.json(result.rows[0])
     console.log("woo")
   } catch (error) {
     console.error(error);
@@ -26,8 +27,22 @@ console.log(result.rows[0]);   res.json(result.rows[0])
   }
 });
 
+app.get("/rate",async(req,res)=>{
+   
+    try {
+         const data = await pool.query(
+        "SELECT * FROM date;"
+    );
+    res.json(data)
+    } catch (error) {
+        console.error(error)
+        Alert.alert("error","its a no go joe")
+        res.status(500).json({error:"internal server error"})
+    }
+});
+
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+app.listen("3000", () => {
   console.log(`Server running on port ${PORT}`);
 });

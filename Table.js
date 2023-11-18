@@ -1,14 +1,49 @@
+
+
 import React, { useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Button } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
 const Table = () => {
-  // Sample data for the table
-  const tableData = [
-    { id: 1, name: "John", age: 25, status: "Active", interest: "Music" },
-    { id: 2, name: "Jane", age: 30, status: "Inactive", interest: "Sports" },
-    { id: 3, name: "Doe", age: 28, status: "Active", interest: "Reading" },
-  ];
+  // Use state to manage the table data
+  const [tableData, setTableData] = useState([])
+//     { id: 1, name: "John", age: 25, status: "Active", interest: "Music" },
+//     { id: 2, name: "Jane", age: 30, status: "Inactive", interest: "Sports" },
+//     { id: 3, name: "Doe", age: 28, status: "Active", interest: "Reading" },
+//   ]);
+
+const handlelove = async () => {
+  try {
+    const response = await fetch("http://192.168.1.242:3000/rate");
+
+    // Check if the response status is OK
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Check if the response body is empty
+    const text = await response.text();
+    console.log("Raw Response:", text);
+
+    // Parse the JSON response
+    const parsedResponse = JSON.parse(text);
+
+    // Ensure parsedResponse.rows is an array
+    if (!parsedResponse.rows || !Array.isArray(parsedResponse.rows)) {
+      console.log("Invalid response format - 'rows' property not found or not an array");
+      return;
+    }
+
+    // Update the state with the new data
+    setTableData(parsedResponse.rows);
+
+    console.log(parsedResponse.rows);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
+
 
   return (
     <View style={styles.container}>
@@ -31,6 +66,7 @@ const Table = () => {
       ))}
 
       <StatusBar style="auto" />
+      <Button title="get love" onPress={handlelove}></Button>
     </View>
   );
 };
@@ -62,7 +98,44 @@ const styles = StyleSheet.create({
   cell: {
     flex: 1,
     textAlign: "center",
-  },
+  }
 });
 
+
+
+
+
 export default Table;
+
+
+// const styles = StyleSheet.create({
+//   container: {
+//     marginTop: 20,
+//     marginHorizontal: 10,
+//   },
+//   header: {
+//     flexDirection: "row",
+//     justifyContent: "space-between",
+//     borderBottomWidth: 1,
+//     borderBottomColor: "#ccc",
+//     paddingBottom: 10,
+//   },
+//   headerText: {
+//     flex: 1,
+//     textAlign: "center",
+//     fontWeight: "bold",
+//   },
+//   row: {
+//     flexDirection: "row",
+//     justifyContent: "space-between",
+//     borderBottomWidth: 1,
+//     borderBottomColor: "#ccc",
+//     paddingVertical: 10,
+//   },
+//   cell: {
+//     flex: 1,
+//     textAlign: "center",
+//   },
+// });
+
+// export default Table;

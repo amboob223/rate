@@ -26,7 +26,8 @@ export default function App() {
 function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.tt}>evidence</Text>
+      <Text style={styles.tt}>RateDater</Text>
+      <Text style = {styles.tt}>on this App you can meet dates and rate your date and the other user will leave a review which will be on the blockchain for all to see </Text>
     </View>
   );
 }

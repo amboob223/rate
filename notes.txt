@@ -87,3 +87,15 @@ ChatGPT can make mistakes. Consider checking important information.
 the issue is you cant have a bunch of folders it worked when i took it out the folder
 
 the style object goes outside the componenet
+
+//okay now the issue was chatgpt was doing to much and the parsi was messing it up 
+
+
+        //today we are going to make the get request
+        
+         in the sht render it on the table 
+         
+         and submit and retrieve picture data 
+
+
+ // thats what we want to accomplish with this one the next one will be about auth and the next about the api and then one or twom main projects with all the elememnts i want to be done by friday so we can at least give solidity a good three weeks 
