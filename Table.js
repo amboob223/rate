@@ -6,15 +6,11 @@ import { StatusBar } from "expo-status-bar";
 
 const Table = () => {
   // Use state to manage the table data
-  const [tableData, setTableData] = useState([])
-//     { id: 1, name: "John", age: 25, status: "Active", interest: "Music" },
-//     { id: 2, name: "Jane", age: 30, status: "Inactive", interest: "Sports" },
-//     { id: 3, name: "Doe", age: 28, status: "Active", interest: "Reading" },
-//   ]);
+  const [tableData, setTableData] = useState([]) // this array keeps the objects of the form 
 
 const handlelove = async () => {
   try {
-    const response = await fetch("http://192.168.1.242:3000/rate");
+    const response = await fetch("http://192.168.1.243:3000/rate");
 
     // Check if the response status is OK
     if (!response.ok) {
@@ -22,7 +18,7 @@ const handlelove = async () => {
     }
 
     // Check if the response body is empty
-    const text = await response.text();
+    const text = await response.text(); // text returns a parsed object as well  but not in json 
     // console.log("Raw Response:", text);
 
     // Parse the JSON response

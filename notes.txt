@@ -96,3 +96,6 @@ the style object goes outside the componenet
 
 
  // thats what we want to accomplish with this one the next one will be about auth and the next about the api and then one or twom main projects with all the elememnts i want to be done by friday so we can at least give solidity a good three weeks 
+
+
+ sometimes the ip changes so you got to change it in the fetch
