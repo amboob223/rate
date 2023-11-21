@@ -11,7 +11,7 @@ export default function Form() {
     name: '',
     age: '',
     status: '',
-    interest: '',
+    intrest: '',
   });
 
   const [image, setImage] = useState(null);
@@ -67,7 +67,7 @@ const handleSubmit = async () => {
         name: formData.name,
         age: formData.age,
         status: formData.status,
-        interest: formData.interest,
+        intrest: formData.intrest,
       }),
     });
 
@@ -105,7 +105,7 @@ const handleSubmit = async () => {
     }
 
     // Reset form state
-    setFormData({ name: '', age: '', status: '', interest: '' });
+    setFormData({ name: '', age: '', status: '', intrest: '' });
     setImage(null);
 
     Alert.alert('Success', "You're good! Now watch the users come to you!");
@@ -150,9 +150,9 @@ const handleSubmit = async () => {
         <View>
           <TextInput
             style={styles.input}
-            onChangeText={(text) => setFormData({ ...formData, interest: text })}
-            placeholder="Interest"
-            value={formData.interest}
+            onChangeText={(text) => setFormData({ ...formData, intrest: text })}
+            placeholder="Intrest"
+            value={formData.intrest}
           />
         </View>
         <Button title="pick image" onPress={pickImage}>

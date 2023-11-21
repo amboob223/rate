@@ -10,7 +10,7 @@ const Table = () => {
 
 const handlelove = async () => {
   try {
-    const response = await fetch("http://192.168.1.243:3000/rate");
+    const response = await fetch("http://192.168.1.81:3000/rate/text");
 
     // Check if the response status is OK
     if (!response.ok) {
@@ -48,7 +48,7 @@ const handlelove = async () => {
         <Text style={styles.headerText}>Name</Text>
         <Text style={styles.headerText}>Age</Text>
         <Text style={styles.headerText}>Status</Text>
-        <Text style={styles.headerText}>Interest</Text>
+        <Text style={styles.headerText}>Intrest</Text>
       </View>
 
       {/* Table data */}

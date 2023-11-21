@@ -43,7 +43,7 @@ app.post("/rate/text", async (req, res) => {
 // Endpoint for handling image data
 app.post("/rate/image", upload.single("pic"), async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.body; // this is convention the id keeps track of text and file info
     const picFileName = req.file ? req.file.filename : null; // Use null if no file is uploaded
 
     // Update the record in the database with the image filename
@@ -60,7 +60,7 @@ app.post("/rate/image", upload.single("pic"), async (req, res) => {
 });
 
 // GET endpoint for retrieving data
-app.get("/rate", async (req, res) => {
+app.get("/rate/text", async (req, res) => {
   try {
     const data = await pool.query("SELECT * FROM date;");
     res.json(data);
