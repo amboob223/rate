@@ -10,7 +10,7 @@ const Table = () => {
 
 const handlelove = async () => {
   try {
-    const response = await fetch("http://192.168.1.81:3000/rate/text");
+    const response = await fetch("http://192.168.1.243:3000/rate/text");
 
     // Check if the response status is OK
     if (!response.ok) {

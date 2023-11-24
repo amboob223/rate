@@ -79,74 +79,208 @@ Remember that this is a broad outline, and you may need to dive deeper into each
 
 
 
+now with the rate app we only need to know how to render 
+a picture back so we can put in the frame and we need to 
+make the description box so that  people can leave they 
+review and show who they was on a date with 
 
-Message ChatGPT…
+and i want to make an api call that shows a tellswhew peoplw can ping there date location 
+and we got to give it some auth
 
-ChatGPT can make mistakes. Consider checking important information.
-
-the issue is you cant have a bunch of folders it worked when i took it out the folder
-
-the style object goes outside the componenet
-
-//okay now the issue was chatgpt was doing to much and the parsi was messing it up 
-
-
-         
-         and submit and retrieve picture data 
-
-
- // thats what we want to accomplish with this one the next one will be about auth and the next about the api and then one or twom main projects with all the elememnts i want to be done by friday so we can at least give solidity a good three weeks 
-
-
- sometimes the ip changes so you got to change it in the fetch
+he require function in React Native is used for static image resources that are bundled with the app during the build process. In your case, you are trying to dynamically load an image using a URI from the server, so require is not suitable for this scenario.
 
 
 
- const express = require("express");
-const app = express();
-const cors = require("cors");
-const pool = require("./db"); // Assuming you have a separate file for your database connection
-// // const multer = require("multer");
-// const path = require("path");
-const bodyParser = require("body-parser");
 
-// Middleware
-app.use(cors());
-app.use(express.json())
 
-app.post("/rate", async (req, res) => {
+
+
+import React, { useState, useEffect } from 'react';
+import { Button, Alert, ScrollView, TextInput, View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import * as Location from 'expo-location'; // Add this line
+
+const imgDir = 'http://192.168.1.243:3000/images/';
+const ensureDirExists = async () => {};
+
+export default function Form() {
+  const [formData, setFormData] = useState({
+    name: '',
+    age: '',
+    status: '',
+    intrest: '',
+  });
+
+  const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    ensureDirExists();
+  }, []);
+
+  const getPermissionAsync = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync(); // Updated permission request
+
+    if (status !== 'granted') {
+      Alert.alert('Permission Denied', 'Please allow location access to use this feature.');
+    }
+  };
+  const pickImage = async () => {
+  await getPermissionAsync();
+
+  const result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    allowsEditing: true,
+    aspect: [4, 3],
+  });
+
+  if (!result.canceled && result.assets && result.assets.length > 0) {
+    // Use the first asset in the "assets" array
+    setImage(result.assets[0].uri);
+  }
+};
+
+const takePicture = async () => {
+  await getPermissionAsync();
+
+  const result = await ImagePicker.launchCameraAsync({
+    allowsEditing: true,
+    aspect: [4, 3],
+  });
+
+  if (!result.canceled && result.assets && result.assets.length > 0) {
+    // Use the first asset in the "assets" array
+    setImage(result.assets[0].uri);
+  }
+};
+// Client-side code
+
+const handleSubmit = async () => {
   try {
-    const { name, age, status, intrest } = req.body;
+    // Step 1: Send text data and receive an ID
+    const response = await fetch('http://192.168.1.81:3000/rate/text', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: formData.name,
+        age: formData.age,
+        status: formData.status,
+        intrest: formData.intrest,
+      }),
+    });
 
-      const result = await pool.query(
-        "INSERT INTO date (name, age, status, intrest) VALUES($1, $2, $3, $4) RETURNING *",
-        [name, age, status, intrest]
-      );
-console.log(result.rows[0]);   
-res.json(result.rows[0])
-    console.log("woo")
+    if (!response.ok) {
+      console.error(response.status, response.statusText);
+      Alert.alert('Error', 'Oops! Something went wrong.');
+      return;
+    }
+
+    const { id } = await response.json();
+
+    // Step 2: Send image data with the received ID
+    const formDataWithImage = new FormData();
+    formDataWithImage.append('id', id); // Associate image with the record
+    
+    if (image) {
+      const fileName = image.split('/').pop();
+      const imageFile = {
+        uri: image,
+        name: fileName,
+        type: 'image/jpg',
+      };
+      formDataWithImage.append('pic', imageFile);
+    }
+
+    const imageResponse = await fetch('http://192.168.1.81:3000/rate/image', {
+      method: 'POST',
+      body: formDataWithImage,
+    });
+
+    if (!imageResponse.ok) {
+      console.error(imageResponse.status, imageResponse.statusText);
+      Alert.alert('Error', 'Oops! Something went wrong.');
+      return;
+    }
+
+    // Reset form state
+    setFormData({ name: '', age: '', status: '', intrest: '' });
+    setImage(null);
+
+    Alert.alert('Success', "You're good! Now watch the users come to you!");
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    Alert.alert('Error', 'Oops! Something went wrong.');
   }
+};
+
+
+
+  return (
+    <ScrollView>
+      <View style={styles.form}>
+        <View>
+          <Text>Sign up to meet dates</Text>
+        </View>
+        <View>
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => setFormData({ ...formData, name: text })}
+            placeholder="Name"
+            value={formData.name}
+          />
+        </View>
+        <View>
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => setFormData({ ...formData, age: text })}
+            placeholder="Age"
+            value={formData.age}
+          />
+        </View>
+        <View>
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => setFormData({ ...formData, status: text })}
+            placeholder="Status"
+            value={formData.status}
+          />
+        </View>
+        <View>
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => setFormData({ ...formData, intrest: text })}
+            placeholder="Intrest"
+            value={formData.intrest}
+          />
+        </View>
+        <Button title="pick image" onPress={pickImage}>
+          <Text>Pick an image from your gallery</Text>
+        </Button>
+        <Button  title="take pic" onPress={takePicture}>
+          <Text>Take a picture</Text>
+        </Button>
+        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+        <Button title="Submit" onPress={handleSubmit} />
+      </View>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  form: {
+    marginTop: 50,
+    margin: 30,
+  },
+  input: {
+    margin: 20,
+  },
 });
 
-app.get("/rate",async(req,res)=>{
-   
-    try {
-         const data = await pool.query(
-        "SELECT * FROM date;"
-    );
-    res.json(data)
-    } catch (error) {
-        console.error(error)
-        Alert.alert("error","its a no go joe")
-        res.status(500).json({error:"internal server error"})
-    }
-});
 
-const PORT = process.env.PORT || 3000;
 
-app.listen("3000", () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
+
+notes form this projects  
+  -be cognizant of node version you might have to update to get expo ro worked  
+  - IN MULter you dont have to acces the filename property or decpnstruict the photo only the id 
+  - form data and photo data is handled diffrent and can be made making two sepereate endpoints one for the text and one for non text info  
+  - expo-image-picker, and file system are from expo library with all they ways to freak the canmera on an android phone

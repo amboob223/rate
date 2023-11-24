@@ -22,6 +22,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+
 // Endpoint for handling text data
 app.post("/rate/text", async (req, res) => {
   try {
@@ -43,8 +44,8 @@ app.post("/rate/text", async (req, res) => {
 // Endpoint for handling image data
 app.post("/rate/image", upload.single("pic"), async (req, res) => {
   try {
-    const { id } = req.body; // this is convention the id keeps track of text and file info
-    const picFileName = req.file ? req.file.filename : null; // Use null if no file is uploaded
+    const  {id}  = req.body;
+    const picFileName = req.file.filename // Access the filename property
 
     // Update the record in the database with the image filename
     await pool.query(
@@ -52,12 +53,14 @@ app.post("/rate/image", upload.single("pic"), async (req, res) => {
       [picFileName, id]
     );
 
+    console.log(picFileName);
     res.json({ success: true });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 
 // GET endpoint for retrieving data
 app.get("/rate/text", async (req, res) => {
